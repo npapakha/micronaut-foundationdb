@@ -9,10 +9,10 @@ plugins {
     id 'io.micronaut.build.shared.settings' version '8.0.0-M13'
 }
 
-rootProject.name = 'project-template-parent'
+rootProject.name = 'foundationdb-parent'
 
-include 'project-template'
-include 'project-template-bom'
+include 'foundationdb'
+include 'foundationdb-bom'
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
