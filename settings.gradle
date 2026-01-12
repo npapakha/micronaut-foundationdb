@@ -13,9 +13,11 @@ rootProject.name = 'foundationdb-parent'
 
 include 'foundationdb'
 include 'foundationdb-bom'
+include 'foundationdb-test'
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
 micronautBuild {
+    useStandardizedProjectNames.set(true)
     importMicronautCatalog()
 }
