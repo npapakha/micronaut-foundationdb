@@ -30,7 +30,7 @@ import java.nio.file.Path;
  */
 public class FoundationDbContainer extends GenericContainer<FoundationDbContainer> {
 
-    public static final String IMAGE_TAG = "7.3.71";
+    public static final String IMAGE_TAG = "7.4.3";
 
     public static final String IMAGE_NAME = "foundationdb/foundationdb";
 

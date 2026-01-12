@@ -20,9 +20,10 @@ public abstract class DownloadLinuxClientTask extends BaseDownloadClientTask {
     }
 
     private void download(String arch) throws Exception {
-        try (InputStream inputStream = new URI(getUrl(arch)).toURL().openStream();) {
+        try (InputStream inputStream = new URI(getUrl(arch)).toURL().openStream()) {
             Path targetPath = getTargetPath(arch);
-            Files.copy(inputStream, targetPath.resolve("libfdb_c.so"), REPLACE_EXISTING);
+            Path outputPath = targetPath.resolve("libfdb_c.so");
+            Files.copy(inputStream, outputPath, REPLACE_EXISTING);
         }
     }
 

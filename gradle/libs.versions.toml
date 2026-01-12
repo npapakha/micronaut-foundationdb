@@ -21,7 +21,7 @@ micronaut-docs = "3.0.0"
 micronaut-test = "4.6.2"
 groovy = "4.0.24"
 spock = "2.3-groovy-4.0"
-foundationdb = "7.3.71"
+foundationdb = "7.4.3"
 testcontainers = "2.0.3"
 
 # Managed versions appear in the BOM

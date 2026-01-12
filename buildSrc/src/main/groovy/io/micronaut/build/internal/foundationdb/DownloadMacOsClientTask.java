@@ -31,7 +31,8 @@ public abstract class DownloadMacOsClientTask extends BaseDownloadClientTask {
     private void download(String arch) throws Exception {
         try (InputStream inputStream = new URI(getUrl(arch)).toURL().openStream()) {
             Path downloadPath = getDownloadPath(arch);
-            Files.copy(inputStream, downloadPath.resolve("FoundationDB.pkg"), REPLACE_EXISTING);
+            Path outputPath = downloadPath.resolve("FoundationDB.pkg");
+            Files.copy(inputStream, outputPath, REPLACE_EXISTING);
         }
     }
 
