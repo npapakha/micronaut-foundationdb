@@ -1,0 +1,29 @@
+import org.gradle.internal.os.OperatingSystem
+
+ext {
+    fdbVersion = libs.versions.foundationdb.get()
+}
+
+tasks.register('downloadLinuxClient', io.micronaut.build.internal.foundationdb.DownloadLinuxClientTask) {
+    group = "build setup"
+
+    version = project.ext.fdbVersion
+    outputDirectory = layout.buildDirectory.dir("foundationdb-client/$project.ext.fdbVersion/linux").get()
+}
+
+tasks.register('downloadMacOsClient', io.micronaut.build.internal.foundationdb.DownloadMacOsClientTask) {
+    onlyIf { OperatingSystem.current().isMacOsX() }
+    group = "build setup"
+
+    version = project.ext.fdbVersion
+    outputDirectory = layout.buildDirectory.dir("foundationdb-client/$project.ext.fdbVersion/osx").get()
+}
+
+tasks.named("jar", Jar) {
+    dependsOn("downloadLinuxClient", "downloadMacOsClient")
+
+    from(layout.buildDirectory.dir("foundationdb-client/${project.ext.fdbVersion}")) {
+        into("lib")
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
