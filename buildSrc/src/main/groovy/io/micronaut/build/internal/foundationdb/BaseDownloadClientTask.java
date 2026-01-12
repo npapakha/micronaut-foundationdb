@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class BaseDownloadClientTask extends DefaultTask {
 
-    protected static final List<String> ARCHITECTURES = List.of("x86_64", "aarch64"); //
+    protected static final List<String> ARCHITECTURES = List.of("x86_64", "aarch64");
 
     protected static final String BASE_URL = "https://github.com/apple/foundationdb/releases/download";
 

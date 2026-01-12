@@ -22,7 +22,7 @@ tasks.register('downloadMacOsClient', io.micronaut.build.internal.foundationdb.D
 tasks.named("jar", Jar) {
     dependsOn("downloadLinuxClient", "downloadMacOsClient")
 
-    from(layout.buildDirectory.dir("foundationdb-client/${project.ext.fdbVersion}")) {
+    from(layout.buildDirectory.dir("foundationdb-client/$project.ext.fdbVersion")) {
         into("lib")
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
