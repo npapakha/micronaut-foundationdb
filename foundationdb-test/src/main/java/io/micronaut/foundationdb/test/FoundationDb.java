@@ -18,22 +18,38 @@ package io.micronaut.foundationdb.test;
 import java.util.Map;
 
 
+/**
+ * Utility class for managing FoundationDB test containers.
+ *
+ * @author Nikolai Papakha
+ */
 public final class FoundationDb {
 
     private static FoundationDbContainer container;
 
+    /**
+     * Private constructor.
+     */
+    private FoundationDb() {
+    }
+
+    /**
+     * Retrieves config properties for the FoundationDB setup with test containers.
+     *
+     * @return A config properties.
+     */
     public static Map<String, String> getProperties() {
         return getProperties("configure new single memory");
     }
 
-    public static Map<String, String> getProperties(String initCmd) {
+    static Map<String, String> getProperties(String initCmd) {
         if (container == null) {
             container = new FoundationDbContainer();
             container.start();
             container.fdbCliExec(initCmd);
         }
         return Map.of(
-            "foundationdb.cluster-file", container.getClusterFile()
+            "foundationdb.cluster-file-path", container.getClusterFile()
         );
     }
 }

@@ -27,11 +27,19 @@ import java.nio.file.Path;
 
 /**
  * A container class for running FoundationDB instances in a Docker environment.
+ *
+ * @author Nikolai Papakha
  */
 public class FoundationDbContainer extends GenericContainer<FoundationDbContainer> {
 
+    /**
+     * The official FoundationDB Docker image tag.
+     */
     public static final String IMAGE_TAG = "7.4.3";
 
+    /**
+     * The official FoundationDB Docker image name.
+     */
     public static final String IMAGE_NAME = "foundationdb/foundationdb";
 
     private static final DockerImageName DOCKER_IMAGE = DockerImageName.parse(IMAGE_NAME).withTag(IMAGE_TAG);
@@ -40,10 +48,18 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
 
     private String clusterFile;
 
+    /**
+     * Constructs a new {@link FoundationDbContainer} instance.
+     */
     public FoundationDbContainer() {
         this(DOCKER_IMAGE);
     }
 
+    /**
+     * Constructs a new {@link FoundationDbContainer} instance with the specified Docker image.
+     *
+     * @param dockerImageName The Docker image
+     */
     public FoundationDbContainer(@NonNull DockerImageName dockerImageName) {
         super(dockerImageName);
         addEnv("FDB_NETWORKING_MODE", "host");
@@ -52,10 +68,20 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
         setWaitStrategy(Wait.forLogMessage(".*FDBD joined cluster.*\\n", 1));
     }
 
+    /**
+     * Retrieves the port number used by the FoundationDB client.
+     *
+     * @return The client port number
+     */
     public int getClientPort() {
         return clientPort;
     }
 
+    /**
+     * Returns the path to the FoundationDB cluster file.
+     *
+     * @return The local file path to the cluster file
+     */
     public String getClusterFile() {
         if (clusterFile != null) {
             return clusterFile;
@@ -74,6 +100,12 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
         }
     }
 
+    /**
+     * Executes a fdbcli command inside the container.
+     *
+     * @param cmd The command to execute
+     * @return The result of the command
+     */
     public ExecResult fdbCliExec(String cmd) {
         try {
             return execInContainer("/usr/bin/fdbcli", "--exec", cmd);
