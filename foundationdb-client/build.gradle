@@ -1,7 +1,4 @@
 plugins {
     id 'io.micronaut.build.internal.foundationdb-module'
-}
-
-dependencies {
-    compileOnly libs.testcontainers
+    id 'io.micronaut.build.internal.foundationdb-client'
 }

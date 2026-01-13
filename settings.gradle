@@ -13,6 +13,7 @@ rootProject.name = 'foundationdb-parent'
 
 include 'foundationdb'
 include 'foundationdb-bom'
+include 'foundationdb-client'
 include 'foundationdb-test'
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
