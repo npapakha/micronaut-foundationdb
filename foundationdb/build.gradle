@@ -1,3 +1,14 @@
 plugins {
     id 'io.micronaut.build.internal.foundationdb-module'
 }
+
+dependencies {
+    api libs.foundationdb
+
+    testImplementation mnTest.micronaut.test.spock
+    testImplementation projects.micronautFoundationdbTest
+    testImplementation projects.micronautFoundationdbClient
+
+    testImplementation libs.testcontainers
+    testRuntimeOnly mnLogging.logback.classic
+}
