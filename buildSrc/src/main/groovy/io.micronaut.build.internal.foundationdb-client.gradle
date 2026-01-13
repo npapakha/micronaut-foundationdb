@@ -7,24 +7,24 @@ ext {
 }
 
 tasks.register('downloadLinuxClient', DownloadLinuxClientTask) {
-    group = "build setup"
+    group = "build"
 
-    version = project.ext.fdbVersion
-    outputDirectory = layout.buildDirectory.dir("foundationdb-client/$project.ext.fdbVersion/linux").get()
+    version = fdbVersion
+    outputDirectory = layout.buildDirectory.dir("foundationdb-client/$fdbVersion/linux").get()
 }
 
 tasks.register('downloadMacOsClient', DownloadMacOsClientTask) {
     onlyIf { OperatingSystem.current().isMacOsX() }
-    group = "build setup"
+    group = "build"
 
-    version = project.ext.fdbVersion
-    outputDirectory = layout.buildDirectory.dir("foundationdb-client/$project.ext.fdbVersion/osx").get()
+    version = fdbVersion
+    outputDirectory = layout.buildDirectory.dir("foundationdb-client/$fdbVersion/osx").get()
 }
 
 tasks.named("jar", Jar) {
     dependsOn("downloadLinuxClient", "downloadMacOsClient")
 
-    from(layout.buildDirectory.dir("foundationdb-client/$project.ext.fdbVersion")) {
+    from(layout.buildDirectory.dir("foundationdb-client/$fdbVersion")) {
         into("lib")
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
