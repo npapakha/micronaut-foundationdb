@@ -21,4 +21,6 @@ enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 micronautBuild {
     useStandardizedProjectNames.set(true)
     importMicronautCatalog()
+    importMicronautCatalog("micronaut-reactor")
+    importMicronautCatalog("micronaut-serde")
 }

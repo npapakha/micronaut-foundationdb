@@ -3,7 +3,7 @@ import io.micronaut.build.internal.foundationdb.DownloadMacOsClientTask
 import org.gradle.internal.os.OperatingSystem
 
 ext {
-    fdbVersion = libs.versions.foundationdb.get()
+    fdbVersion = libs.versions.managed.foundationdb.get()
 }
 
 tasks.register('downloadLinuxClient', DownloadLinuxClientTask) {

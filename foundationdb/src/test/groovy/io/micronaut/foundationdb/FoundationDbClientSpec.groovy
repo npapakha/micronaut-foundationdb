@@ -24,7 +24,7 @@ class FoundationDbClientSpec extends AbstractFoundationDbSpec {
         db.run { it.set(key, value) }
 
         then:
-        db.run { it.get(key) }.get() == value
+        db.run { it.get(key) }.join() == value
 
         cleanup:
         db.run { it.clear(key) }
@@ -34,6 +34,6 @@ class FoundationDbClientSpec extends AbstractFoundationDbSpec {
         given:
         byte[] unknownKey = "UNKNOWN".bytes
         expect:
-        db.run { it.get(unknownKey) }.get() == null
+        db.run { it.get(unknownKey) }.join() == null
     }
 }

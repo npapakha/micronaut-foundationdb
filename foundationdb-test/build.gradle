@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
+    compileOnly platform(mnTest.boms.testcontainers)
     compileOnly libs.testcontainers
 }

@@ -46,7 +46,7 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
 
     private final int clientPort = findFreePort();
 
-    private String clusterFile;
+    private String clusterFilePath;
 
     /**
      * Constructs a new {@link FoundationDbContainer} instance.
@@ -69,6 +69,20 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
     }
 
     /**
+     * Starts a new FoundationDB container with a single replica in-memory configuration.
+     */
+    public void startNewSingleMemory() {
+        super.start();
+        fdbCliExec("configure new single memory");
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        clusterFilePath = null;
+    }
+
+    /**
      * Retrieves the port number used by the FoundationDB client.
      *
      * @return The client port number
@@ -82,9 +96,9 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
      *
      * @return The local file path to the cluster file
      */
-    public String getClusterFile() {
-        if (clusterFile != null) {
-            return clusterFile;
+    public String getClusterFilePath() {
+        if (clusterFilePath != null) {
+            return clusterFilePath;
         }
         try {
             ExecResult result = execInContainer("printenv", "FDB_CLUSTER_FILE");
@@ -93,8 +107,8 @@ public class FoundationDbContainer extends GenericContainer<FoundationDbContaine
             Path localPath = tmpDir.resolve("fdb.cluster");
             copyFileFromContainer(remotePath, localPath.toString());
             localPath.toFile().deleteOnExit();
-            clusterFile = localPath.toString();
-            return clusterFile;
+            clusterFilePath = localPath.toString();
+            return clusterFilePath;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

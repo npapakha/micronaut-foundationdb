@@ -17,6 +17,7 @@ package io.micronaut.foundationdb;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Nullable;
 
 
@@ -27,7 +28,8 @@ import io.micronaut.core.annotation.Nullable;
  */
 @Requires(property = FoundationDbClientConfig.PREFIX)
 @ConfigurationProperties(value = FoundationDbClientConfig.PREFIX)
-public class FoundationDbClientConfig {
+@Internal
+public final class FoundationDbClientConfig {
 
     /**
      * The prefix to use for FoundationDB configuration.
