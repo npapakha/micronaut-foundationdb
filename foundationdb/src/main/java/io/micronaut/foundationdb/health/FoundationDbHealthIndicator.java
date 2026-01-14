@@ -17,6 +17,7 @@ package io.micronaut.foundationdb.health;
 
 import com.apple.foundationdb.Database;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.health.HealthStatus;
 import io.micronaut.json.JsonMapper;
@@ -27,7 +28,6 @@ import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -64,7 +64,7 @@ public class FoundationDbHealthIndicator implements HealthIndicator {
     @Override
     public Publisher<HealthResult> getResult() {
         CompletableFuture<byte[]> clientStatus = database.getClientStatus();
-        return Mono.fromCompletionStage(
+        return Publishers.fromCompletableFuture(
             clientStatus
                 .thenApply(this::deserialize)
                 .thenApply(this::buildHealthResult)
