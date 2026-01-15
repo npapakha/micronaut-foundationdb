@@ -83,7 +83,7 @@ class MicrometerEventKeeper implements EventKeeper {
             .tags(getTags(Events.RANGE_QUERY_CHUNK_FAILED))
             .register(meterRegistry));
 
-        timers.put(Events.RANGE_QUERY_FETCH_TIME_NANOS, Timer.builder("foundationdb.range.query.fetch.time")
+        timers.put(Events.RANGE_QUERY_FETCH_TIME_NANOS, Timer.builder("foundationdb.range.query.fetch.time.nanos")
             .description("The time taken to perform an internal `getRange` fetch")
             .tags(getTags(Events.RANGE_QUERY_FETCH_TIME_NANOS))
             .register(meterRegistry));

@@ -27,6 +27,14 @@ class MicrometerEventKeeperSpec extends AbstractFoundationDbSpec {
         knownEvents.every { registry.find(metadataProvider.getMeterName(it)).counter() != null}
     }
 
+    def 'test all known time events are registered'() {
+        given:
+        def knownEvents = EventKeeper.Events.values().findAll { it.isTimeEvent() } as EventKeeper.Event[]
+
+        expect:
+        knownEvents.every { registry.find(metadataProvider.getMeterName(it)).timer() != null}
+    }
+
     def 'test counter meter gets incremented'() {
         given:
         def key = 'THE_KEY'.bytes
