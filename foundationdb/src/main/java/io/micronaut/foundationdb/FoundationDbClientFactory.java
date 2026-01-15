@@ -17,8 +17,9 @@ package io.micronaut.foundationdb;
 
 import com.apple.foundationdb.ApiVersion;
 import com.apple.foundationdb.Database;
+import com.apple.foundationdb.EventKeeper;
 import com.apple.foundationdb.FDB;
-import io.micronaut.context.BeanContext;
+import io.micronaut.context.BeanLocator;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.inject.qualifiers.Qualifiers;
@@ -39,17 +40,18 @@ class FoundationDbClientFactory {
      * Creates a FoundationDB {@link Database} instance based on the provided configuration.
      *
      * @param config      The {@link FoundationDbClientConfig} containing settings for the database
-     * @param beanContext The {@link BeanContext} used for resolving the executor service
+     * @param beanLocator The {@link BeanLocator}
      * @return The {@link Database}
      */
     @Bean(preDestroy = "close")
     @Singleton
-    Database createDatabase(FoundationDbClientConfig config, BeanContext beanContext) {
+    Database createDatabase(FoundationDbClientConfig config, BeanLocator beanLocator) {
         if (config.getNativeLibraryPath() != null) {
             System.setProperty("FDB_LIBRARY_PATH_FDB_C", config.getNativeLibraryPath());
         }
         ExecutorService executor = Optional.ofNullable(config.getExecutor())
-            .flatMap(name -> beanContext.findBean(ExecutorService.class, Qualifiers.byName(name))).orElse(FDB.DEFAULT_EXECUTOR);
-        return FDB.selectAPIVersion(ApiVersion.LATEST).open(config.getClusterFilePath(), executor);
+            .flatMap(name -> beanLocator.findBean(ExecutorService.class, Qualifiers.byName(name))).orElse(FDB.DEFAULT_EXECUTOR);
+        EventKeeper eventKeeper = beanLocator.findBean(EventKeeper.class).orElse(null);
+        return FDB.selectAPIVersion(ApiVersion.LATEST).open(config.getClusterFilePath(), executor, eventKeeper);
     }
 }

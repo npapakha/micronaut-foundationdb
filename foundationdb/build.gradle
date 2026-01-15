@@ -8,15 +8,16 @@ dependencies {
     api libs.managed.foundationdb
 
     compileOnly mn.micronaut.management
+    compileOnly mnMicrometer.micronaut.micrometer.core
     compileOnly mnSerde.micronaut.serde.jackson
-
-    testImplementation mn.micronaut.management
-    testImplementation mnReactor.micronaut.reactor
-    testImplementation mnSerde.micronaut.serde.jackson
 
     testImplementation projects.micronautFoundationdbTest
     testImplementation projects.micronautFoundationdbClient
 
+    testImplementation mn.micronaut.management
+    testImplementation mnMicrometer.micronaut.micrometer.core
+    testImplementation mnReactor.micronaut.reactor
+    testImplementation mnSerde.micronaut.serde.jackson
     testImplementation mnTest.micronaut.test.spock
 
     testImplementation platform(mnTest.boms.testcontainers)
