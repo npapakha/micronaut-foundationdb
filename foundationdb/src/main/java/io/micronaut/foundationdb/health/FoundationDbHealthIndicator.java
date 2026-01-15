@@ -63,13 +63,15 @@ public class FoundationDbHealthIndicator implements HealthIndicator {
 
     @Override
     public Publisher<HealthResult> getResult() {
+        return Publishers.fromCompletableFuture(this::getResultFuture);
+    }
+
+    private CompletableFuture<HealthResult> getResultFuture() {
         CompletableFuture<byte[]> clientStatus = database.getClientStatus();
-        return Publishers.fromCompletableFuture(
-            clientStatus
-                .thenApply(this::deserialize)
-                .thenApply(this::buildHealthResult)
-                .exceptionally(this::buildErrorResult)
-        );
+        return clientStatus
+            .thenApply(this::deserialize)
+            .thenApply(this::buildHealthResult)
+            .exceptionally(this::buildErrorResult);
     }
 
     private FoundationDbClientStatus deserialize(byte[] byteArray) {
